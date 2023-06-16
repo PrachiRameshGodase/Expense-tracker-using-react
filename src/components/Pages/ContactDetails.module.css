@@ -30,3 +30,34 @@
       }
   }
   
+  .main{
+    margin-top: 2rem;
+  }
+
+  .main h2{
+    
+    text-align: center;
+    
+  }
+  .main form{
+    text-align: center;
+  }
+  .main input{
+    margin-top: 3rem;
+    margin-left: 1rem;
+    border-radius: 6px;
+    /* padding-left: 3rem; */
+  }
+  .main label{
+    margin-top: 3rem;
+    margin-left: 1rem;
+  }
+  .main button{
+    margin-top: 2rem;
+    display: flex;
+    margin-left: 24rem;
+
+  }
+  .main hr{
+    margin-left: 24rem;
+  }
