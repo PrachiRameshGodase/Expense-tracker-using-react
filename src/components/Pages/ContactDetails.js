@@ -42,8 +42,7 @@ const ContactDetails = () => {
         console.log(res)
         console.log(res.users[0].displayName);
         setInitialName(res.users[0].displayName);
-        // console.log(res.users[0].displayName);
-        setInitialUrl(res.users[0].photoUrl);
+        setInitialUrl(res.users[0].photoUrl); // set inital values
       })
       .catch((err) => {
         console.log(err);
@@ -90,7 +89,7 @@ const ContactDetails = () => {
         console.log("Error occurred while updating user details", error);
       });
   
-    return false;
+    
   };
   
 
