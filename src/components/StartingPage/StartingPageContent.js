@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import classes from './StartingPageContent.module.css';
 
 const StartingPageContent = () => {
@@ -53,7 +53,10 @@ const StartingPageContent = () => {
           Your profile is incomplete. Complete now.
         </Button>
       </div>
+      <Link to="/expensetracker">Expense Tracker</Link>
       <hr />
+      
+      
       <Button onClick={verifyEmailHandler}>verify email</Button>
     </>
   );
