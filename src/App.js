@@ -33,6 +33,7 @@ import StartingPageContent from './components/StartingPage/StartingPageContent';
 import ContactDetails from './components/Pages/ContactDetails';
 import AuthContext from './store/auth-context';
 import 'bootstrap/dist/css/bootstrap.css';
+import Header from './components/Layout/Header';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -47,7 +48,7 @@ function App() {
   return (
     <React.Fragment>
       
-
+    <Header/>
       <Routes>
         <Route path="/dashboard" element={<StartingPageContent />} />
         <Route path="/contact-details" element={<ContactDetails />} />

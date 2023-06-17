@@ -1,7 +1,8 @@
 import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
-import classes from "./AuthForm.module.css";
+import classes from "./AuthForm.module.css"
+
 
 const AuthForm = () => {
   
@@ -13,6 +14,8 @@ const AuthForm = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
+
+  
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -118,7 +121,9 @@ const AuthForm = () => {
           </button>
         </div>
       </form>
+      
     </section>
+    
   );
 };
 
