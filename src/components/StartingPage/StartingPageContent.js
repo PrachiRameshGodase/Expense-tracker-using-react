@@ -5,6 +5,7 @@ import classes from './StartingPageContent.module.css';
 
 const StartingPageContent = () => {
   const [isBouncing, setIsBouncing] = useState(true);
+  
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
@@ -12,6 +13,34 @@ const StartingPageContent = () => {
     navigate('/contact-details'); // Replace '/next-page' with the actual path of the next page
   };
 
+
+  const verifyEmailHandler = () => {
+    fetch(
+      "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDOK295ELdPlDwRD3Doj62RleCtXSGNQec",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          requestType: "VERIFY_EMAIL",
+          idToken: localStorage.getItem("token"),
+        }),
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((response) => {
+        console.log("verified the email succesfully")
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("not verified");
+        }
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <>
       <div className={classes.starting}>
@@ -25,6 +54,7 @@ const StartingPageContent = () => {
         </Button>
       </div>
       <hr />
+      <Button onClick={verifyEmailHandler}>verify email</Button>
     </>
   );
 };
