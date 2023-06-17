@@ -34,6 +34,7 @@ import ContactDetails from './components/Pages/ContactDetails';
 import AuthContext from './store/auth-context';
 import 'bootstrap/dist/css/bootstrap.css';
 import Header from './components/Layout/Header';
+import ForgotPassword from './components/Pages/ForgotPassword';
 
 function App() {
   const authCtx = useContext(AuthContext);
@@ -51,6 +52,7 @@ function App() {
     <Header/>
       <Routes>
         <Route path="/dashboard" element={<StartingPageContent />} />
+        <Route path='/forgotpassword' element={<ForgotPassword/>}/>
         <Route path="/contact-details" element={<ContactDetails />} />
         <Route path="/" element={authCtx.isLoggedIn ? <Navigate to="/dashboard" /> : <AuthForm />} />
       </Routes>

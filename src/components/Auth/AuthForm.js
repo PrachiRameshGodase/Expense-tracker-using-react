@@ -1,5 +1,5 @@
 import { useState, useRef, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
 import classes from "./AuthForm.module.css"
 
@@ -79,6 +79,7 @@ const AuthForm = () => {
   }
   else{
     alert("Password is wrong")
+    
   }
   }
 
@@ -119,6 +120,7 @@ const AuthForm = () => {
           >
             {isLogin ? "Create new account" : "Login with existing account"}
           </button>
+          <Link className={classes.forgot} to="/forgotpassword">Forgot Password</Link>
         </div>
       </form>
       

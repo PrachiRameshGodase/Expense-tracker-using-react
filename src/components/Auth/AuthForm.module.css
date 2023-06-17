@@ -71,3 +71,7 @@
     background-color: transparent;
     color: #ae82cc;
   }
+
+  .forgot{
+    cursor: pointer;
+  }
