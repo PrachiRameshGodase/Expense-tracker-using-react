@@ -46,19 +46,15 @@ function App() {
 
   return (
     <React.Fragment>
-      {/* <Routes>
-        {!authCtx.isLoggedIn && <Route path="/" element={<AuthForm />} />}
-        {authCtx.isLoggedIn && <Navigate to="/dashboard" />}
+      
+
+      <Routes>
         <Route path="/dashboard" element={<StartingPageContent />} />
         <Route path="/contact-details" element={<ContactDetails />} />
-      </Routes> */}
+        <Route path="/" element={authCtx.isLoggedIn ? <Navigate to="/dashboard" /> : <AuthForm />} />
+      </Routes>
 
-<Routes>
-  {!authCtx.isLoggedIn && <Route path="/" element={<AuthForm />} />}
-  {authCtx.isLoggedIn && <Route path="/" element={<Navigate to="/dashboard" />} />} {/* Move the <Navigate> component inside a <Route> */}
-  <Route path="/dashboard" element={<StartingPageContent />} />
-  <Route path="/contact-details" element={<ContactDetails />} />
-</Routes>
+
 
     </React.Fragment>
   );
