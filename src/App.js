@@ -31,7 +31,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import AuthForm from './components/Auth/AuthForm';
 import StartingPageContent from './components/StartingPage/StartingPageContent';
 import ContactDetails from './components/Pages/ContactDetails';
-import AuthContext from './store/auth-context';
+import AuthContext, { AuthContextProvider } from './store/auth-context';
 import 'bootstrap/dist/css/bootstrap.css';
 import Header from './components/Layout/Header';
 import ForgotPassword from './components/Pages/ForgotPassword';
@@ -48,7 +48,7 @@ function App() {
   }, [authCtx.isLoggedIn]);
 
   return (
-    <React.Fragment>
+    <AuthContextProvider>
       
     <Header/>
       <Routes>
@@ -61,7 +61,7 @@ function App() {
 
 
 
-    </React.Fragment>
+    </AuthContextProvider>
   );
 }
 
