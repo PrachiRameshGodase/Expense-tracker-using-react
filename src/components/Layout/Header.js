@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 function Header() {
   const dispatch=useDispatch();
   const isAuth=useSelector(state=>state.auth.isAuthenticated)
+  const isPremium=useSelector(state=>state.auth.ispremium);
 
   const navigate=useNavigate()
 
@@ -18,6 +19,7 @@ function Header() {
     }
   return (
     <header className={classes.header}>
+      {isPremium && <Button>Premium</Button>}
       {isAuth  && (<Button variant='danger' onClick={logOutHandler}>Logout</Button>)}
     </header>
   )

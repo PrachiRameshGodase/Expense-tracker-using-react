@@ -129,6 +129,13 @@ useEffect(() => {
       });
   }
   
+  const sum = expenses.reduce(
+    (total, expense) => total + parseInt(expense.amount),
+    0
+  );
+  if(sum){
+    dispatch(authActions.ispremium(sum))
+  }
   
   return (
     <>
@@ -164,6 +171,7 @@ useEffect(() => {
           <option>Salary</option>
         </select>
         <button type="submit">Add expense</button>
+        <span>Total amount:{sum}</span>
       </form>
 
       <ul>
