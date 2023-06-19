@@ -1,20 +1,24 @@
-import React,{useContext} from 'react'
+import { useSelector,useDispatch } from 'react-redux';
 import classes from "./Header.module.css"
 import { Button } from 'react-bootstrap'
-import AuthContext from '../../store/auth-context'
+import { authActions } from '../../store/auth';
 import { useNavigate } from 'react-router-dom'
 
 function Header() {
-    const navigate=useNavigate()
-const authctx=useContext(AuthContext)
-const isLoggedIn=authctx.isLoggedIn;
-const logOutHandler=()=>{
-    authctx.logout();
-    navigate('/');
-  }
+  const dispatch=useDispatch();
+  const isAuth=useSelector(state=>state.auth.isAuthenticated)
+
+  const navigate=useNavigate()
+
+
+  const logOutHandler=()=>{
+      // authctx.logout();
+      dispatch(authActions.logout())
+      navigate('/');
+    }
   return (
     <header className={classes.header}>
-      {isLoggedIn  && (<Button variant='danger' onClick={logOutHandler}>Logout</Button>)}
+      {isAuth  && (<Button variant='danger' onClick={logOutHandler}>Logout</Button>)}
     </header>
   )
 }

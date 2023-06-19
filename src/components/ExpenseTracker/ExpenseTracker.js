@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../store/auth';
 
 function ExpenseTracker() {
   const [amount, setAmount] = useState('');
@@ -7,9 +9,15 @@ function ExpenseTracker() {
   const [category, setCategory] = useState('');
   const [expenses, setExpenses] = useState([]);
 
+  const dispatch=useDispatch()
+
 
 
 useEffect(() => {
+  const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(authActions.login(token));
+    }
     // Fetch expenses data from Firebase Realtime Database
     fetch("https://expense-tracker-ae023-default-rtdb.firebaseio.com/expense.json")
       .then((response) => {

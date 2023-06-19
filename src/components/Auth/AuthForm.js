@@ -1,14 +1,20 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, Fragment} from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AuthContext from "../../store/auth-context";
+
 import classes from "./AuthForm.module.css"
+
+import { useDispatch} from "react-redux";
+import { authActions } from "../../store/auth";
 
 
 const AuthForm = () => {
+  const dispatch =useDispatch()
+
+  // const isLogged=useSelector(state=>state.auth.isAuthenticated)
   
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading,setisLoading]=useState(false);
-  const authCtx=useContext(AuthContext)
+  
   const navigate = useNavigate();
 
   const emailInputRef = useRef();
@@ -67,7 +73,9 @@ const AuthForm = () => {
       }
     }).then(data=>{
       console.log(data)
-      authCtx.login(data.idToken);
+      // authCtx.login(data.idToken);
+
+      dispatch(authActions.login(data.idToken))
      
         console.log("successfully sign up")
         navigate("/dashboard");
@@ -84,7 +92,8 @@ const AuthForm = () => {
   }
 
   return (
-    <section className={classes.auth}>
+    <Fragment>
+    {<section className={classes.auth}>
       <h1>{isLogin ? "Login" : "Sign Up"}</h1>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
@@ -124,7 +133,9 @@ const AuthForm = () => {
         </div>
       </form>
       
-    </section>
+    </section>}
+
+    </Fragment>
     
   );
 };
