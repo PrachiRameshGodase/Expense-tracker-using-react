@@ -94,32 +94,51 @@ const ContactDetails = () => {
   
 
   return (
-    <div>
-      <div className={classes.starting}>
-        <h1>Winners never quit, Quitters never win..</h1>
-        <Button
-          variant="danger"
-          className={isBouncing ? classes.bouncing : ''}
-          onClick={handleButtonClick}
-           style={{ height: 'auto', whiteSpace: 'normal' }}
-         >
-           Your profile is 64% completed.<br />A complete Profile has higher chances of landing a job. Complete now
-         </Button>
-       </div>
-      <hr />
-      <div className={classes.main}>
-         <h2>Contact Details</h2>
-         <form onSubmit={updateFormDataHandler}>
-             <label htmlFor='name'>Full Name:</label>
-             <input type='text' id='name' ref={fullNameRef} defaultValue={initialName}/>
-            <label htmlFor='profilephoto'>Profile Photo URL:</label>
-            <input id='profilephoto' ref={urlRef} defaultValue={initialUrl}/>
-            <Button type="submit" variant="danger">Update</Button>
+    <>
+
+      <Button
+        variant="warning"
+        className={`flex  mt-3 mb-3 justify-center ${isBouncing ? classes.bouncing : ''}`}
+        onClick={handleButtonClick}
+        style={{ height: 'auto', whiteSpace: 'normal', position: 'relative', top: '50%', left: '32%', transform: 'translate(-50%, -50%)' }}
+      >
+        Your profile is 64% completed.<br />A complete profile has higher chances of landing a job. Complete now.
+      </Button>
+
+        <section className="bg-gradient-to-b from-purple-900 via-pink-400 to-purple-900 wd-full  max-w-xl rounded-6 shadow-md py-3 text-center text-white mx-auto my-5 rounded-4 mt-3">
+        <h2 className=" flex text-2xl font-bold text-white mb-4 justify-center">Contact Details</h2>
+        <form onSubmit={updateFormDataHandler}>
+            <div>
+          <label htmlFor="name" className="block text-white font-semibold mb-1 mx-0">
+          Full Name:
+          </label>
+          <input
+            type="text"
+            id='name'
+            ref={fullNameRef} defaultValue={initialName}
+            className=" w-full max-w-md py-2 px-3 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-purple-400"
+          />
+        </div>
+        <div>
+          <label htmlFor="name" className="block text-white font-semibold mb-1 mx-0 mt-3">
+          Profile Photo URL:
+          </label>
+          <input
+            type="text"
+            id='profilephoto'
+            ref={urlRef} defaultValue={initialUrl}
+            className=" w-full max-w-md py-2 px-3 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-purple-400"
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-gradient-to-b from-red-800 via-red-500 to-red-800  hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-purple-400 mt-3"
+        >
+          Update
+        </button>
         </form>
-        <hr/>
-       </div>
-    </div>
-   
+      </section>
+   </>
   );
 };
 

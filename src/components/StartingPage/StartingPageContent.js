@@ -15,6 +15,7 @@ const StartingPageContent = () => {
 
 
   const verifyEmailHandler = () => {
+    setIsBouncing(false);
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDOK295ELdPlDwRD3Doj62RleCtXSGNQec",
       {
@@ -40,24 +41,38 @@ const StartingPageContent = () => {
       .catch((err) => {
         console.log(err);
       });
+      
   };
   return (
     <>
-      <div className={classes.starting}>
-        <h1>Welcome to Expense Tracker!</h1>
-        <Button
-          variant="info"
+    <h1 className='flex items-center justify-center mt-5'>Welcome to Expense Tracker!</h1>
+     <section className="bg-gradient-to-b from-purple-900 via-pink-400 to-purple-900 wd-full  max-w-sm rounded-6 shadow-md py-3 text-center text-white mx-auto my-5 rounded-4">
+    <Button
+          variant="danger"
+          className={isBouncing ? classes.bouncing : ''}
+          onClick={verifyEmailHandler}
+          
+        >
+        Your profile is incomplete. Verify Email
+    </Button>
+    
+    </section>
+
+    <section className="bg-gradient-to-b from-purple-900 via-pink-400 to-purple-900 wd-full  max-w-sm rounded-6 shadow-md py-3 text-center text-white mx-auto my-5 rounded-4">
+    <Button
+          variant="danger"
           className={isBouncing ? classes.bouncing : ''}
           onClick={handleButtonClick}
         >
           Your profile is incomplete. Complete now.
-        </Button>
-      </div>
-      <Link to="/expensetracker">Expense Tracker</Link>
-      <hr />
-      
-      
-      <Button onClick={verifyEmailHandler}>verify email</Button>
+    </Button>
+    </section>
+    <section className="bg-gradient-to-b from-purple-900 via-pink-400 to-purple-900 wd-full  max-w-sm rounded-6 shadow-md py-3 text-center text-white mx-auto my-5 rounded-4 ">
+    <Link to="/expensetracker"><Button variant="danger"
+          className={isBouncing ? classes.bouncing : ''}>Visit now Expense Tracker!</Button></Link>
+    </section>
+    
+     
     </>
   );
 };
