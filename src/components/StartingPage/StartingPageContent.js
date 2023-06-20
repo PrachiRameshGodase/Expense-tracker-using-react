@@ -46,7 +46,7 @@ const StartingPageContent = () => {
   return (
     <>
     <h1 className='flex items-center justify-center mt-5'>Welcome to Expense Tracker!</h1>
-     <section className="bg-gradient-to-b from-purple-900 via-pink-400 to-purple-900 wd-full  max-w-sm rounded-6 shadow-md py-3 text-center text-white mx-auto my-5 rounded-4">
+     <section className="bg-gradient-to-b from-purple-900 via-pink-400 to-purple-900 wd-full  max-w-md rounded-6 shadow-md py-4 text-center text-white mx-auto my-5 rounded-4 mb-3">
     <Button
           variant="danger"
           className={isBouncing ? classes.bouncing : ''}
@@ -58,7 +58,7 @@ const StartingPageContent = () => {
     
     </section>
 
-    <section className="bg-gradient-to-b from-purple-900 via-pink-400 to-purple-900 wd-full  max-w-sm rounded-6 shadow-md py-3 text-center text-white mx-auto my-5 rounded-4">
+    <section className="bg-gradient-to-b from-purple-900 via-pink-400 to-purple-900 wd-full  max-w-md rounded-6 shadow-md py-4 text-center text-white mx-auto my-5 rounded-4">
     <Button
           variant="danger"
           className={isBouncing ? classes.bouncing : ''}
@@ -67,7 +67,7 @@ const StartingPageContent = () => {
           Your profile is incomplete. Complete now.
     </Button>
     </section>
-    <section className="bg-gradient-to-b from-purple-900 via-pink-400 to-purple-900 wd-full  max-w-sm rounded-6 shadow-md py-3 text-center text-white mx-auto my-5 rounded-4 ">
+    <section className="bg-gradient-to-b from-purple-900 via-pink-400 to-purple-900 wd-full  max-w-md rounded-6 shadow-md py-4 text-center text-white mx-auto my-5 rounded-4 ">
     <Link to="/expensetracker"><Button variant="danger"
           className={isBouncing ? classes.bouncing : ''}>Visit now Expense Tracker!</Button></Link>
     </section>

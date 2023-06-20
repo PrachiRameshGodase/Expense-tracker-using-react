@@ -30,12 +30,13 @@ function Header() {
   return (
     <nav className="p-3  bg-gradient-to-b from-blue-900 to-purple-400 items-center">
       <div style={{display:"flex",
-      flexDirection:"row",
+      flexDirection:"row",         
       alignItems:"center",
       
       justifyContent:"space-between"}}>
 
-      <h1 className='text-white '>Expense tracker</h1>
+      <h1 className={`mr-8 text-gray-100 font-bold ${classes.logo}`}>Expense tracker</h1>
+
       <div style={{
         display:"flex",
         // border:"1px solid red",

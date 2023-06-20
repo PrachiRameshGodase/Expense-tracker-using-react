@@ -2,6 +2,7 @@ import { useState, useEffect} from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../store/auth';
+import { Button } from 'react-bootstrap';
 
 function ExpenseTracker() {
   const [amount, setAmount] = useState('');
@@ -13,7 +14,21 @@ function ExpenseTracker() {
 
   const isToggle=useSelector(state=>state.auth.isdarkToggle)
 
+  function downloadExpensesAsTxt() {
+    const data = expenses.map((expense) => {
+      return `Amount: ${expense.amount} | Description: ${expense.description} | Category: ${expense.category}`;
+    });
+    const text = data.join("\n");
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
 
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "expenses.txt";
+    link.click();
+
+    URL.revokeObjectURL(url);
+  }
 
 useEffect(() => {
   const token = localStorage.getItem("token");
@@ -140,8 +155,12 @@ useEffect(() => {
   }
   
   return (
+
     <>
- { !isToggle && (<form onSubmit={submitHandler} className="bg-gradient-to-b from-blue-800 via-pink-500 to-purple-800  rounded-lg shadow-md p-6 space-y-6 wd-full mx-auto max-w-xl mt-6">
+    <div>
+
+{!isToggle && <Button onClick={downloadExpensesAsTxt} className='flex justify-end mx-auto'>DownLoad File</Button> }
+ { !isToggle && (<form onSubmit={submitHandler} className="bg-gradient-to-b from-blue-800 via-pink-500 to-purple-800  rounded-lg shadow-md p-6 space-y-6 wd-full mx-auto max-w-xl mt-4">
   <h2 className=" flex text-2xl font-bold text-white mb-4 justify-center">ADD EXPENSE</h2>
 
   <div>
@@ -200,7 +219,7 @@ useEffect(() => {
     Add Expense
   </button>
 
-  <button className="bg-gradient-to-r flex mx-auto from-blue-800  to-blue-500  hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-purple-400">Total amount: {sum}</button>
+  <button className="bg-gradient-to-r flex mx-auto from-blue-800  to-blue-500  hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-purple-400 mt-1">Total amount: {sum}</button>
 
   <input type="text" className="hidden" /> {/* Placeholder for the missing 'imput' element */}
 </form>)}
@@ -218,56 +237,66 @@ useEffect(() => {
   ))}
 </ul>
 )}
-{ isToggle && (<form onSubmit={submitHandler} className="bg-gradient-to-b from-green-600 via-red-700 to-green-600 rounded-lg shadow-md p-6 space-y-6 wd-full mx-auto max-w-xl mt-6">
-  <h2 className=" flex text-2xl font-bold text-white mb-4 justify-center">ADD EXPENSE</h2>
+</div>
 
-  <div>
-    <label htmlFor="amount" className="block text-white font-semibold mb-1">
-      Expense Amount
-    </label>
-    <input
-      type="number"
-      id="amount"
-      value={amount}
-      onChange={(event) => {
-        setAmount(event.target.value);
-      }}
-      className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-purple-400"
-    />
-  </div>
+<div style={{backgroundColor:"black"}}>
+  <div className='' style={{display:"flex" , flexDirection:"row", justifyContent:"space-between"}}>
+  <Button onClick={downloadExpensesAsTxt} className=''>DownLoad File</Button>
+  <span className=' text-white'>Dark theme is active now</span>
+{/* <Button onClick={downloadExpensesAsTxt} className='flex justify-end mx-auto'>DownLoad File</Button> */}
+</div>
+  { isToggle && (
+    
+  <form onSubmit={submitHandler} className="bg-gradient-to-b from-green-600 via-red-700 to-green-600 rounded-lg shadow-md p-6 space-y-6 wd-full mx-auto max-w-xl mt-6">
+    <h2 className=" flex text-2xl font-bold text-white mb-4 justify-center">ADD EXPENSE</h2>
 
-  <div>
-    <label htmlFor="description" className="block text-white font-semibold mb-1">
-      Expense Description
-    </label>
-    <input
-      type="text"
-      id="description"
-      value={description}
-      onChange={(event) => {
-        setDescription(event.target.value);
-      }}
-      className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-purple-400"
-    />
-  </div>
+    <div>
+      <label htmlFor="amount" className="block text-white font-semibold mb-1">
+        Expense Amount
+      </label>
+      <input
+        type="number"
+        id="amount"
+        value={amount}
+        onChange={(event) => {
+          setAmount(event.target.value);
+        }}
+        className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-purple-400"
+      />
+    </div>
 
-  <div>
-    <label htmlFor="category" className="block text-white font-semibold mb-1">
-      Expense Category
-    </label>
-    <select
-      id="category"
-      value={category}
-      onChange={(event) => {
-        setCategory(event.target.value);
-      }}
-      className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-purple-400"
-    >
-      <option>Choose Category</option>
-      <option>Food</option>
-      <option>Petrol</option>
-      <option>Salary</option>
-    </select>
+    <div>
+      <label htmlFor="description" className="block text-white font-semibold mb-1">
+        Expense Description
+      </label>
+      <input
+        type="text"
+        id="description"
+        value={description}
+        onChange={(event) => {
+          setDescription(event.target.value);
+        }}
+        className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-purple-400"
+      />
+    </div>
+
+    <div>
+      <label htmlFor="category" className="block text-white font-semibold mb-1">
+        Expense Category
+      </label>
+      <select
+        id="category"
+        value={category}
+        onChange={(event) => {
+          setCategory(event.target.value);
+        }}
+        className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-purple-400"
+      >
+        <option>Choose Category</option>
+        <option>Food</option>
+        <option>Petrol</option>
+        <option>Salary</option>
+      </select>
   </div>
 
   <button
@@ -294,6 +323,10 @@ useEffect(() => {
     </li>
   ))}
 </ul>)}
+
+</div>
+
+{/* <Button onClick={downloadExpensesAsTxt}>DownLoad file</Button> */}
       
     </>
   );

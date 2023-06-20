@@ -75,4 +75,18 @@
         transform: scale(1);
       }
   }
-  
+  .logo {
+    /* font-size: 24px; */
+  background: linear-gradient(to right, #fc0707, #f2ea0a); /* Replace with your desired gradient colors */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: color 0.3s;
+  }
+  .logo:hover {
+    /* font-size: 24px; */
+  background: linear-gradient(to right,#f2ea0a, #fc0707); /* Replace with your desired gradient colors */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: color 0.3s;
+
+  }
