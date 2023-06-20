@@ -14,7 +14,9 @@ function Header() {
 
   const handleButtonClick = () => {
     setIsBouncing(false);
-   
+    dispatch(authActions.darkToggle());
+  
+  
   };
 
 
@@ -26,12 +28,23 @@ function Header() {
       navigate('/');
     }
   return (
-    <nav className="p-3  bg-gradient-to-b from-blue-900 to-purple-400 items-center flex justify-between">
+    <nav className="p-3  bg-gradient-to-b from-blue-900 to-purple-400 items-center">
+      <div style={{display:"flex",
+      flexDirection:"row",
+      alignItems:"center",
+      
+      justifyContent:"space-between"}}>
 
       <h1 className='text-white '>Expense tracker</h1>
+      <div style={{
+        display:"flex",
+        // border:"1px solid red",
+        width:"450px",
+        justifyContent:"space-between"
+      }}>
       {!isAuth && (<Link
               to="/"
-              ><button className='bg-gradient-to-b from-red-600 via-red-500 to-red-800  hover:bg-purple-600 py-2 px-4 font-bold text-white rounded '>LOGIN</button>
+              ><button className='bg-gradient-to-b from-red-600 via-red-500 to-red-800  hover:bg-purple-600 py-2 px-4 font-bold text-white rounded'>LOGIN</button>
               </Link>)}
        {isPremium && 
        <button className={`bg-gradient-to-r from-red-600 via-green-500 to-red-600 py-2 px-4 font-bold text-white rounded hover:bg-red-800  ${
@@ -42,6 +55,8 @@ function Header() {
      {isAuth && 
      <button className='bg-gradient-to-b from-red-600 via-red-500 to-red-800  hover:bg-purple-600 py-2 px-4 font-bold text-white rounded ' onClick={logOutHandler}
      >LOGOUT</button>}
+     </div>
+     </div>
     </nav>
   )
 }
