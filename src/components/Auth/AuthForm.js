@@ -1,8 +1,5 @@
 import { useState, useRef, Fragment} from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-// import classes from "./AuthForm.module.css"
-
 import { useDispatch} from "react-redux";
 import { authActions } from "../../store/auth";
 
@@ -95,124 +92,75 @@ const AuthForm = () => {
 
   return (
     <Fragment>
-    {/* // {<section className={classes.auth}>
-    //   <h1>{isLogin ? "Login" : "Sign Up"}</h1>
-    //   <form onSubmit={submitHandler}>
-    //     <div className={classes.control}>
-    //       <label htmlFor="email">Your Email</label>
-    //       <input type="email" id="email" ref={emailInputRef} required />
-    //     </div>
-    //     <div className={classes.control}>
-    //       <label htmlFor="password">Your Password</label>
-    //       <input
-    //         type="password"
-    //         id="password"
-    //         ref={passwordInputRef}
-    //         required
-    //       />
-    //     </div>
-    //     <div className={classes.control}>
-    //     <label htmlFor="confirmpassword">Confirm Password</label>
-    //     <input
-    //       type="password"
-    //       id="confirmpassword"
-    //       ref={confirmPasswordInputRef}
-    //       required
-    //     />
-    //   </div>
-
-    //     <div className={classes.actions}>
-    //       {!isLoading && <button >{isLogin ? "Login" : "Create Account"}</button>}
-    //       {isLoading && <p>Sending request...</p>}
-    //       <button
-    //         type="button"
-    //         className={classes.toggle}
-    //         onClick={switchAuthModeHandler}
-    //       >
-    //         {isLogin ? "Create new account" : "Login with existing account"}
-    //       </button>
-    //       <Link className={classes.forgot} to="/forgotpassword">Forgot Password</Link>
-    //     </div>
-    //   </form>
-      
-    // </section>} */}
-
-<section className="bg-gradient-to-b from-purple-900 via-pink-400 to-blue-900 wd-full  max-w-xl rounded-6 shadow-md py-3 text-center text-white mx-auto my-5 rounded-4">
-        <h1 className="text-white text-2xl font-bold mb-4">{isLogin ? "Login" : "Sign Up"}</h1>
-        <form onSubmit={submitHandler} className="px-4">
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-white font-bold mb-2">
-              Your Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              ref={emailInputRef}
-              required
-              className="bg-purple-100 text-purple-900 rounded-3 border border-white w-full  py-2 px-4 "
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-white font-bold mb-2">
-              Your Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              ref={passwordInputRef}
-              required
-              className="bg-purple-100 text-purple-900 rounded-3 border w-full  border-white py-2 px-4"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block text-white font-bold mb-2">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              ref={confirmPasswordInputRef}
-              required
-              className="bg-purple-100 text-purple-900 rounded-3 border border-white w-full py-2 px-4"
-            />
-          </div>
-          <div className="mb-2">
-            {!isLoading ? (
+      <section className="bg-gradient-to-b from-purple-900 via-pink-400 to-blue-900 wd-full  max-w-xl rounded-6 shadow-md py-3 text-center text-white mx-auto my-5 rounded-4">
+          <h1 className="text-white text-2xl font-bold mb-4">{isLogin ? "Login" : "Sign Up"}</h1>
+          <form onSubmit={submitHandler} className="px-4">
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-white font-bold mb-2">
+                Your Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                ref={emailInputRef}
+                required
+                className="bg-purple-100 text-purple-900 rounded-3 border border-white w-full  py-2 px-4 "
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="password" className="block text-white font-bold mb-2">
+                Your Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                ref={passwordInputRef}
+                required
+                className="bg-purple-100 text-purple-900 rounded-3 border w-full  border-white py-2 px-4"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="confirmPassword" className="block text-white font-bold mb-2">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                ref={confirmPasswordInputRef}
+                required
+                className="bg-purple-100 text-purple-900 rounded-3 border border-white w-full py-2 px-4"
+              />
+            </div>
+            <div className="mb-2">
+              {!isLoading ? (
+                <button
+                  type="submit"
+                  className="bg-red-600 text-white rounded-2 px-4 py-2"
+                >
+                  {isLogin ? "Login" : "Sign Up"}
+                </button>
+              ) : (
+                <p>Sending request...</p>
+              )}
+            </div>
+            <div>
               <button
-                type="submit"
-                className="bg-red-600 text-white rounded-2 px-4 py-2"
+                type="button"
+                className="bg-transparent text-white underline mb-2"
+                onClick={switchAuthModeHandler}
               >
-                {isLogin ? "Login" : "Sign Up"}
+                {isLogin ? "Create new account" : "Login with existing account"}
               </button>
-            ) : (
-              <p>Sending request...</p>
-            )}
-          </div>
-          <div>
-            <button
-              type="button"
-              className="bg-transparent text-white underline mb-2"
-              onClick={switchAuthModeHandler}
-            >
-              {isLogin ? "Create new account" : "Login with existing account"}
-            </button>
-          </div>
+            </div>
 
-          <div>
-            <Link to="/forgotpassword" className="text-white underline mb-2 mt-2">
-              Forgot Password
-            </Link>
-          </div>
-        </form>
-      </section>
-
-      
-
-    </Fragment>
-
-
-
-    
+            <div>
+              <Link to="/forgotpassword" className="text-white underline mb-2 mt-2">
+                Forgot Password
+              </Link>
+            </div>
+          </form>
+        </section>
+</Fragment>
   );
 };
 

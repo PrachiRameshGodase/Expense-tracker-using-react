@@ -91,11 +91,8 @@ const ContactDetails = () => {
   
     
   };
-  
-
   return (
-    <>
-
+    <React.Fragment>
       <Button
         variant="warning"
         className={`flex  mt-3 mb-3 justify-center ${isBouncing ? classes.bouncing : ''}`}
@@ -105,7 +102,7 @@ const ContactDetails = () => {
         Your profile is 64% completed.<br />A complete profile has higher chances of landing a job. Complete now.
       </Button>
 
-        <section className="bg-gradient-to-b from-purple-900 via-pink-400 to-purple-900 wd-full  max-w-xl rounded-6 shadow-md py-3 text-center text-white mx-auto my-5 rounded-4 mt-3">
+      <section className="bg-gradient-to-b from-purple-900 via-pink-400 to-purple-900 wd-full  max-w-xl rounded-6 shadow-md py-3 text-center text-white mx-auto my-5 rounded-4 mt-3">
         <h2 className=" flex text-2xl font-bold text-white mb-4 justify-center">Contact Details</h2>
         <form onSubmit={updateFormDataHandler}>
             <div>
@@ -138,7 +135,7 @@ const ContactDetails = () => {
         </button>
         </form>
       </section>
-   </>
+   </React.Fragment>
   );
 };
 

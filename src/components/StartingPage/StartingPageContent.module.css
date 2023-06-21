@@ -1,14 +1,4 @@
-.starting {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .starting h1 {
-    /* Additional styles for the h1 element if needed */
-  }
-  
-  .bouncing {
+.bouncing {
     animation: bounceAnimation 1s infinite;
     
   }
