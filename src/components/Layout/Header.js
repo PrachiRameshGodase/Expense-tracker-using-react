@@ -1,20 +1,20 @@
 import React, {useState } from "react";
-import { useSelector,useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
 import classes from "./Header.module.css"
-
-import { authActions } from '../../store/auth';
+import { premiumActions } from "../../store/authPremium";
+import { authActions } from "../../store/auth";
 import { useNavigate } from 'react-router-dom'
 
 function Header() {
   const [isBouncing, setIsBouncing] = useState(true);
   const dispatch=useDispatch();
   const isAuth=useSelector(state=>state.auth.isAuthenticated)
-  const isPremium=useSelector(state=>state.auth.ispremium);
+  const isPremium=useSelector(state=>state.premium.ispremium);
 
   const handleButtonClick = () => {
     setIsBouncing(false);
-    dispatch(authActions.darkToggle());
+    dispatch(premiumActions.darkToggle());
   
   
   };
@@ -38,10 +38,10 @@ function Header() {
       <h1 className={`mr-8 text-gray-100 font-bold ${classes.logo}`}>Expense tracker</h1>
 
       <div style={{
-        display:"flex",
-        // border:"1px solid red",
-        width:"450px",
-        justifyContent:"space-between"
+        // display:"flex",
+        // // border:"1px solid red",
+        // width:"450px",
+        // justifyContent:"space-between"
       }}>
       {!isAuth && (<Link
               to="/"
@@ -54,7 +54,7 @@ function Header() {
           onClick={handleButtonClick}>Premium</button>} 
 
      {isAuth && 
-     <button className='bg-gradient-to-b from-red-600 via-red-500 to-red-800  hover:bg-purple-600 py-2 px-4 font-bold text-white rounded ' onClick={logOutHandler}
+     <button className='bg-gradient-to-b from-red-600 via-red-500 to-red-800  hover:bg-purple-600 py-2 px-4 font-bold text-white rounded mx-5 ' onClick={logOutHandler}
      >LOGOUT</button>}
      </div>
      </div>

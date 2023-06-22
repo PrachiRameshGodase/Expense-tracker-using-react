@@ -22,7 +22,7 @@ function App() {
         <Route path='/forgotpassword' element={<ForgotPassword/>}/>
         <Route path="/contact-details" element={<ContactDetails />} />
         <Route path="/" element={isAuth ? <Navigate to="/dashboard" /> : <AuthForm />} />
-      </Routes>
+    </Routes>
 
 
 

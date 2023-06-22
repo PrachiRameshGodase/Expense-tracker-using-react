@@ -1,7 +1,8 @@
-import { useState, useEffect, Fragment} from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../store/auth';
+import { premiumActions } from '../../store/authPremium';
 import { Button } from 'react-bootstrap';
 
 function ExpenseTracker() {
@@ -10,9 +11,10 @@ function ExpenseTracker() {
   const [category, setCategory] = useState('');
   const [expenses, setExpenses] = useState([]);
 
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
 
-  const isToggle=useSelector(state=>state.auth.isdarkToggle)
+  const isToggle = useSelector(state => state.premium.isdarkToggle)
+
 
   function downloadExpensesAsTxt() {
     const data = expenses.map((expense) => {
@@ -30,13 +32,18 @@ function ExpenseTracker() {
     URL.revokeObjectURL(url);
   }
 
+  //if we login then the email is in localStorage for doing the post request the getting that email id neccessary
+  const enteredEmail=localStorage.getItem('email');
+  const updatedEmail = enteredEmail ? enteredEmail.replace('@', '').replace('.', '') : '';
+
+
 useEffect(() => {
   const token = localStorage.getItem("token");
     if (token) {
       dispatch(authActions.login(token));
     }
     // Fetch expenses data from Firebase Realtime Database
-    fetch("https://expense-tracker-ae023-default-rtdb.firebaseio.com/expense.json")
+    fetch(`https://user-http-56c85-default-rtdb.firebaseio.com/user/${updatedEmail}.json`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -44,23 +51,25 @@ useEffect(() => {
           throw new Error("Failed to fetch");
         }
       })
-      .then((data) => {
-        // console.log(data);
+      .then((data) => { 
+        console.log(data);
      //Coditionally rendering the data
      const fetchedExpenses = [];
         for (const key in data) {
           fetchedExpenses.push({
-            id: key,
+            id:key,
             amount: data[key].amount,
             description: data[key].description,
             category: data[key].category
           });
         }
         setExpenses(fetchedExpenses);
+
+        console.log(fetchedExpenses)
 })
       .catch((error) => {
         console.log("Error occurred while fetching expenses data:", error);
-        setExpenses([]);
+        
       }); 
   }, []);
 
@@ -74,15 +83,16 @@ useEffect(() => {
       category: category,
     };
     // Send a POST request to store the new expense in the database
-    fetch('https://expense-tracker-ae023-default-rtdb.firebaseio.com/expense.json', {
+    fetch(`https://user-http-56c85-default-rtdb.firebaseio.com/user/${updatedEmail}.json`, {
       method: 'POST',
       body: JSON.stringify(newExpense),
       headers: { 'Content-Type': 'application/json' },
     })
       .then((response) => {
         console.log('Expense successfully added');
+        console.log(response)
         if (response.ok) {
-          return response.json();
+          return response.json(); 
         } else {
           throw new Error('Failed to add expense');
         }
@@ -91,6 +101,9 @@ useEffect(() => {
         console.log(data);
         // Update the expenses state with the new expense
         setExpenses((prevExpenses) => [...prevExpenses, { ...newExpense, id: data.name }]);
+        console.log(data.name)
+
+        
         setAmount('');
         setDescription('');
         setCategory('');
@@ -102,7 +115,8 @@ useEffect(() => {
 
   // Delete the expense
   const deleteExpense = (id) => {
-    fetch(`https://expense-tracker-ae023-default-rtdb.firebaseio.com/expense/${id}.json`, {
+    fetch(`https://user-http-56c85-default-rtdb.firebaseio.com/user/${updatedEmail}/${id}.json`
+    , {
       method: 'DELETE',
     })
       .then((response) => {
@@ -131,7 +145,8 @@ useEffect(() => {
         setDescription(editItem.description);
         setCategory(editItem.category)
     }
-    fetch(`https://expense-tracker-ae023-default-rtdb.firebaseio.com/expense/${id}.json`, {
+    fetch(`https://user-http-56c85-default-rtdb.firebaseio.com/user/${updatedEmail}/${id}.json`
+    , {
         method: 'DELETE',
       }).then((response) => {
         if (response.ok) {
@@ -151,7 +166,7 @@ useEffect(() => {
     0
   );
   if(sum){
-    dispatch(authActions.ispremium(sum))
+    dispatch(premiumActions.setPremium(sum))
   }
   
   return (
@@ -225,7 +240,7 @@ useEffect(() => {
 
 
   {!isToggle && (<ul className="bg-gradient-to-b from-blue-800 via-pink-500 to-purple-500 rounded-lg shadow-md p-6 space-y-4 mt-7 mx-5">
-    {expenses.map((item, index) => (
+    {expenses && expenses.map((item, index) => (
       <li key={index} className="border-b border-gray-300 py-2 flex text-white">
         <span className="font-semibold mx-2">Amount:</span> {item.amount}---{' '}
         <span className="font-semibold mx-2">Description:</span> {item.description}---{' '}
@@ -314,7 +329,7 @@ useEffect(() => {
 
 
 {isToggle && (<ul className="bg-gradient-to-r from-red-600 via-green-500 to-red-600 rounded-lg shadow-md p-6 space-y-4 mt-7 mx-5">
-  {expenses.map((item, index) => (
+  {expenses && expenses.map((item, index) => (
     <li key={index} className="border-b border-gray-300 py-2 flex text-white">
       <span className="font-semibold mx-2">Amount:</span> {item.amount}---{' '}
       <span className="font-semibold mx-2">Description:</span> {item.description}---{' '}
@@ -330,3 +345,4 @@ useEffect(() => {
 }
 
 export default ExpenseTracker;
+

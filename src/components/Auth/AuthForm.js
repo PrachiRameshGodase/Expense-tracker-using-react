@@ -30,6 +30,8 @@ const AuthForm = () => {
     const confirmPassword=confirmPasswordInputRef.current.value;
     console.log(enteredEmail, enteredPassword,confirmPassword);
 
+    localStorage.setItem("email",enteredEmail);
+
 
     if(enteredPassword===confirmPassword){
     setisLoading(true)
