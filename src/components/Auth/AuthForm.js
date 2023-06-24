@@ -1,7 +1,7 @@
 import { useState, useRef, Fragment} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch} from "react-redux";
-import { authActions } from "../../store/auth";
+import { authActions } from "../../storee/authReducer";
 
 
 const AuthForm = () => {
@@ -74,7 +74,7 @@ const AuthForm = () => {
       console.log(data)
       // authCtx.login(data.idToken);
 
-      dispatch(authActions.login(data.idToken))
+      dispatch(authActions.islogin(data.idToken))
      
         console.log("successfully sign up")
         navigate("/dashboard");

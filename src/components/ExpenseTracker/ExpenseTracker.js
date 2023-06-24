@@ -1,23 +1,64 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState,Fragment,useEffect } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { authActions } from '../../store/auth';
-import { premiumActions } from '../../store/authPremium';
+import { useSelector ,useDispatch} from 'react-redux';
+// import { authActions } from '../../store/auth';
+// import { premiumActions } from '../../store/authPremium';
+
+import { authActions } from '../../storee/authReducer';
 import { Button } from 'react-bootstrap';
 
 function ExpenseTracker() {
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
-  const [expenses, setExpenses] = useState([]);
+  const [expenses,setExpenses]=useState([])
+  
 
   const dispatch = useDispatch();
 
-  const isToggle = useSelector(state => state.premium.isdarkToggle)
+  const isToggle = useSelector(state => state.auth.darkToggle)
+
+
+
+
+  //if we login then the email is in localStorage for doing the post request the getting that email id neccessary
+  const enteredEmail=localStorage.getItem('email');
+  const updatedEmail = enteredEmail ? enteredEmail.replace('@', '').replace('.', '') : '';
+
+  
+  const fetchExpenses = () => {
+    fetch(`https://user-http-56c85-default-rtdb.firebaseio.com/user/${updatedEmail}.json`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Failed to fetch expenses');
+        }
+      })
+      .then((data) => {
+        const loadedExpenses = [];
+        for (const key in data) {
+          loadedExpenses.push({ id: key, ...data[key] });
+        }
+        setExpenses(loadedExpenses);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log(token)
+    if (token) {
+      dispatch(authActions.islogin(token));
+    }
+    fetchExpenses();
+  }, []);
 
 
   function downloadExpensesAsTxt() {
-    const data = expenses.map((expense) => {
+    const data =expenses.map((expense) => {
       return `Amount: ${expense.amount} | Description: ${expense.description} | Category: ${expense.category}`;
     });
     const text = data.join("\n");
@@ -32,53 +73,15 @@ function ExpenseTracker() {
     URL.revokeObjectURL(url);
   }
 
-  //if we login then the email is in localStorage for doing the post request the getting that email id neccessary
-  const enteredEmail=localStorage.getItem('email');
-  const updatedEmail = enteredEmail ? enteredEmail.replace('@', '').replace('.', '') : '';
 
 
-useEffect(() => {
-  const token = localStorage.getItem("token");
-    if (token) {
-      dispatch(authActions.login(token));
-    }
-    // Fetch expenses data from Firebase Realtime Database
-    fetch(`https://user-http-56c85-default-rtdb.firebaseio.com/user/${updatedEmail}.json`)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error("Failed to fetch");
-        }
-      })
-      .then((data) => { 
-        console.log(data);
-     //Coditionally rendering the data
-     const fetchedExpenses = [];
-        for (const key in data) {
-          fetchedExpenses.push({
-            id:key,
-            amount: data[key].amount,
-            description: data[key].description,
-            category: data[key].category
-          });
-        }
-        setExpenses(fetchedExpenses);
-
-        console.log(fetchedExpenses)
-})
-      .catch((error) => {
-        console.log("Error occurred while fetching expenses data:", error);
-        
-      }); 
-  }, []);
 
 
   const submitHandler = (event) => {
     event.preventDefault();
 
     const newExpense = {
-      amount: amount,
+      amount: parseInt(amount),
       description: description,
       category: category,
     };
@@ -100,7 +103,9 @@ useEffect(() => {
       .then((data) => {
         console.log(data);
         // Update the expenses state with the new expense
-        setExpenses((prevExpenses) => [...prevExpenses, { ...newExpense, id: data.name }]);
+        setExpenses((prevExpenses) => [...prevExpenses, { ...newExpense}]);
+
+        // props.onAdd(newExpense.amount,newExpense.description,newExpense.category)
         console.log(data.name)
 
         
@@ -113,7 +118,7 @@ useEffect(() => {
       });
   };
 
-  // Delete the expense
+// Delete the expense
   const deleteExpense = (id) => {
     fetch(`https://user-http-56c85-default-rtdb.firebaseio.com/user/${updatedEmail}/${id}.json`
     , {
@@ -166,7 +171,7 @@ useEffect(() => {
     0
   );
   if(sum){
-    dispatch(premiumActions.setPremium(sum))
+    dispatch(authActions.isPremium(sum))
   }
   
   return (
@@ -186,7 +191,7 @@ useEffect(() => {
             id="amount"
             value={amount}
             onChange={(event) => {
-              setAmount(event.target.value);
+              setAmount(parseInt(event.target.value));
             }}
             className="w-full py-2 px-3 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-purple-400"
           />
@@ -233,7 +238,7 @@ useEffect(() => {
         Add Expense
       </button>
 
-      <button className="bg-gradient-to-r flex mx-auto from-blue-800  to-blue-500  hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-purple-400 mt-1">Total amount: {sum}</button>
+      <button className="bg-gradient-to-r flex mx-auto from-blue-800  to-blue-500  hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:ring focus:ring-purple-400 mt-0.25">Total amount: {sum}</button>
 
       <input type="text" className="hidden" /> {/* Placeholder for the missing 'imput' element */}
     </form>)}
@@ -312,6 +317,7 @@ useEffect(() => {
         <option>Food</option>
         <option>Petrol</option>
         <option>Salary</option>
+        <option>Transportation</option>
       </select>
   </div>
 

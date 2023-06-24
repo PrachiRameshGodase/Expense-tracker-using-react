@@ -24,11 +24,7 @@ const premiumSlice = createSlice({
     darkToggle(state) {
       state.isdarkToggle = true;
     },
-    // logout(state) {
-    //   // You can include logout functionality in the premiumSlice if desired
-    //   state.ispremium = false;
-    //   state.isdarkToggle = false;
-    // },
+   
   },
 });
 
